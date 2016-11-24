@@ -38,7 +38,7 @@ local function GetCurrentWorld()
 	if not(g_CurrentWorldName) then
 		return cRoot:Get():GetDefaultWorld()
 	end
-	
+
 	-- Return the named world
 	return cRoot:Get():GetWorld(g_CurrentWorldName)
 end
@@ -54,7 +54,7 @@ local function ChunksFromCuboid(a_Cuboid)
 	local MaxX = math.floor(a_Cuboid.p2.x / 16)
 	local MinZ = math.floor(a_Cuboid.p1.z / 16)
 	local MaxZ = math.floor(a_Cuboid.p2.z / 16)
-	
+
 	local res = {}
 	local idx = 1
 	for z = MinZ, MaxZ do
@@ -63,7 +63,7 @@ local function ChunksFromCuboid(a_Cuboid)
 			idx = idx + 1
 		end
 	end
-	
+
 	return res
 end
 
@@ -87,7 +87,7 @@ function HandleConsoleCmdFill(a_Split)
 		-- An error occurred, report it:
 		return true, blockTypeSource
 	end
-	
+
 	-- Fill a block area with the data:
 	local area = cBlockArea()
 	local MinX = g_Selection.p1.x
@@ -105,7 +105,7 @@ function HandleConsoleCmdFill(a_Split)
 			end
 		end
 	end
-	
+
 	-- Write the area to the world:
 	local world = GetCurrentWorld()
 	world:ChunkStay(ChunksFromCuboid(g_Selection), nil,
@@ -115,7 +115,7 @@ function HandleConsoleCmdFill(a_Split)
 			LOG("Selection " .. GetSelectionDesc() .. " has been filled.")
 		end
 	)
-	
+
 	return true
 end
 
@@ -128,7 +128,7 @@ function HandleConsoleCmdGetBlock(a_Split)
 	if (not(a_Split[5]) or a_Split[6]) then
 		return true, "Usage: cwc getblock x y z"
 	end
-	
+
 	-- Get the coords:
 	local x = tonumber(a_Split[3])
 	local y = tonumber(a_Split[4])
@@ -136,7 +136,7 @@ function HandleConsoleCmdGetBlock(a_Split)
 	if (not(x) or not(y) or not(z)) then
 		return true, "Invalid coordinates"
 	end
-	
+
 	-- Get the block from the world:
 	local world = GetCurrentWorld()
 	world:ChunkStay(ChunksFromPoint(x, z), nil,
@@ -154,7 +154,7 @@ function HandleConsoleCmdGetBlock(a_Split)
 			end
 		end
 	)
-	
+
 	return true
 end
 
@@ -184,7 +184,7 @@ function HandleConsoleCmdSetBlock(a_Split)
 	if (not(a_Split[6]) or a_Split[7]) then
 		return true, "Usage: cwc setblock x y z blocktype"
 	end
-	
+
 	-- Get the coords:
 	local x = tonumber(a_Split[3])
 	local y = tonumber(a_Split[4])
@@ -192,14 +192,14 @@ function HandleConsoleCmdSetBlock(a_Split)
 	if (not(x) or not(y) or not(z)) then
 		return true, "Invalid coordinates"
 	end
-	
+
 	-- Get the blocktype:
 	local blockType, blockMeta = StringToBlockType(a_Split[6])
 	if not(blockType) then
 		-- Conversion failed, blockMeta contains the error message
 		return true, blockMeta
 	end
-	
+
 	-- Set the block in the world:
 	local world = GetCurrentWorld()
 	world:ChunkStay(ChunksFromPoint(x, z), nil,
@@ -208,7 +208,7 @@ function HandleConsoleCmdSetBlock(a_Split)
 			LOG("Block set")
 		end
 	)
-	
+
 	return true
 end
 
@@ -224,7 +224,7 @@ function HandleConsoleCmdWorld(a_Split)
 			g_CurrentWorldName = nil
 			return true, "Current world set to default"
 		end
-		
+
 		-- Check that the world exists:
 		local w = cRoot:Get():GetWorldByName(a_Split[3])
 		if not(w) then
@@ -233,7 +233,7 @@ function HandleConsoleCmdWorld(a_Split)
 		g_CurrentWorldName = a_Split[3]
 		return true, "Current world set to " .. a_Split[3]
 	end
-	
+
 	-- No param was given, output the current world name:
 	return true, GetCurrentWorld():GetName()
 end

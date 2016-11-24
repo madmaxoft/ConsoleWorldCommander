@@ -21,13 +21,13 @@ function StringToBlockType(a_BlockTypeStr)
 	if not(StringToItem(a_BlockTypeStr, item)) then
 		return false, "Not a valid block type: " .. a_BlockTypeStr
 	end
-	
+
 	-- Check that it's a block, not an item:
 	local blockType = item.m_ItemType
 	if (blockType >= 256) then
 		return false, "Invalid block type (it's an item): " .. a_BlockTypeStr
 	end
-	
+
 	return blockType, item.m_ItemDamage
 end
 
@@ -42,7 +42,7 @@ local function MakeSingleBlockTypeSource(a_BlockTypeStr)
 		-- Conversion failed, blockMeta contains the error message
 		return blockMeta
 	end
-	
+
 	-- Return the BlockTypeSource:
 	return function()
 		return blockType, blockMeta
@@ -73,7 +73,7 @@ function CreateBlockTypesSource(a_Definitions, a_StartIndex)
 	if (not(a_Definitions[a_StartIndex + 1]) and (string.sub(a_Definitions[a_StartIndex], 1, 1) ~= "-")) then
 		return MakeSingleBlockTypeSource(a_Definitions[a_StartIndex])
 	end
-	
+
 	-- Consider the definitions a list of blocktypes and their chances, make a multi-type source:
 	return MakeMultiBlockTypesSource(a_Definitions, a_StartIndex)
 end

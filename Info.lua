@@ -15,10 +15,10 @@ g_PluginInfo =
 	[[
 		This is a plugin for {%a http://cuberite.org}Cuberite{%/a} that allows admins to manipulate world using console commands.
 	]],
-	
+
 	SourceLocation = "https://github.com/madmaxoft/ConsoleWorldCommander",
 	DownloadLocation = "https://github.com/madmaxoft/ConsoleWorldCommander/archive/master.zip",
-	
+
 	ConsoleCommands =
 	{
 		cwc =
