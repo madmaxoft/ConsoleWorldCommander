@@ -36,7 +36,24 @@ g_PluginInfo =
 							Help = "Fills the selection with the specified blocktypes. Multiple blocktypes with chances are supported",
 						},
 					},
-				},  -- list
+				},  -- fill
+
+				genchunk =
+				{
+					HelpString = "Generates a chunk / multiple chunks at the specified coord",
+					Handler = HandleConsoleCmdGenChunk,
+					ParameterCombinations =
+					{
+						{
+							Params = "ChunkX ChunkZ",
+							Help = "Generates a chunk at the specified coords",
+						},
+						{
+							Params = "ChunkX1 ChunkZ1 ChunkX2 ChunkZ2",
+							Help = "Generates chunks between the specified coords",
+						},
+					},
+				},  -- genchunk
 
 				getblock =
 				{
@@ -50,6 +67,23 @@ g_PluginInfo =
 						},
 					},
 				},  -- getblock
+
+				regenchunk =
+				{
+					HelpString = "Regenerates a chunk / multiple chunks at the specified coord",
+					Handler = HandleConsoleCmdRegenChunk,
+					ParameterCombinations =
+					{
+						{
+							Params = "ChunkX ChunkZ",
+							Help = "Regenerates a chunk at the specified coords",
+						},
+						{
+							Params = "ChunkX1 ChunkZ1 ChunkX2 ChunkZ2",
+							Help = "Regenerates chunks between the specified coords",
+						},
+					},
+				},  -- regenchunk
 
 				["select"] =
 				{

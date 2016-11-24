@@ -123,6 +123,59 @@ end
 
 
 
+function HandleConsoleCmdGenChunk(a_Split)
+	-- If the params contain only one set of coords, expand to two sets:
+	local paramStart = 3  -- where the command's parameters start, "cwc genchunk _"
+	a_Split[paramStart + 2] = a_Split[paramStart + 2] or a_Split[paramStart]
+	a_Split[paramStart + 3] = a_Split[paramStart + 3] or a_Split[paramStart + 1]
+
+	-- Read the params:
+	local chunkX1 = tonumber(a_Split[paramStart])
+	local chunkZ1 = tonumber(a_Split[paramStart + 1])
+	if not(chunkX1) then
+		return true, "Missing the ChunkX parameter"
+	end
+	if not(chunkZ1) then
+		return true, "Missing the ChunkZ parameter"
+	end
+	local chunkX2 = tonumber(a_Split[paramStart + 2])
+	if not(chunkX2) then
+		return true, "Invalid ChunkX2 parameter"
+	end
+	local chunkZ2 = tonumber(a_Split[paramStart + 3])
+	if not(chunkZ2) then
+		return true, "Invalid ChunkZ2 parameter"
+	end
+
+	-- Sort the coords:
+	local minX, maxX
+	if (chunkX1 < chunkX2) then
+		minX, maxX = chunkX1, chunkX2
+	else
+		minX, maxX = chunkX2, chunkX1
+	end
+	local minZ, maxZ
+	if (chunkZ1 < chunkZ2) then
+		minZ, maxZ = chunkZ1, chunkZ2
+	else
+		minZ, maxZ = chunkZ2, chunkZ1
+	end
+
+	-- Generate the chunks:
+	local world = GetCurrentWorld()
+	for x = minX, maxX do
+		for z = minZ, maxZ do
+			world:GenerateChunk(x, z)
+		end
+	end
+
+	return true, "Chunk generation queued"
+end
+
+
+
+
+
 function HandleConsoleCmdGetBlock(a_Split)
 	-- Check the params:
 	if (not(a_Split[5]) or a_Split[6]) then
@@ -156,6 +209,59 @@ function HandleConsoleCmdGetBlock(a_Split)
 	)
 
 	return true
+end
+
+
+
+
+
+function HandleConsoleCmdRegenChunk(a_Split)
+	-- If the params contain only one set of coords, expand to two sets:
+	local paramStart = 3  -- where the command's parameters start, "cwc genchunk _"
+	a_Split[paramStart + 2] = a_Split[paramStart + 2] or a_Split[paramStart]
+	a_Split[paramStart + 3] = a_Split[paramStart + 3] or a_Split[paramStart + 1]
+
+	-- Read the params:
+	local chunkX1 = tonumber(a_Split[paramStart])
+	local chunkZ1 = tonumber(a_Split[paramStart + 1])
+	if not(chunkX1) then
+		return true, "Missing the ChunkX parameter"
+	end
+	if not(chunkZ1) then
+		return true, "Missing the ChunkZ parameter"
+	end
+	local chunkX2 = tonumber(a_Split[paramStart + 2])
+	if not(chunkX2) then
+		return true, "Invalid ChunkX2 parameter"
+	end
+	local chunkZ2 = tonumber(a_Split[paramStart + 3])
+	if not(chunkZ2) then
+		return true, "Invalid ChunkZ2 parameter"
+	end
+
+	-- Sort the coords:
+	local minX, maxX
+	if (chunkX1 < chunkX2) then
+		minX, maxX = chunkX1, chunkX2
+	else
+		minX, maxX = chunkX2, chunkX1
+	end
+	local minZ, maxZ
+	if (chunkZ1 < chunkZ2) then
+		minZ, maxZ = chunkZ1, chunkZ2
+	else
+		minZ, maxZ = chunkZ2, chunkZ1
+	end
+
+	-- Generate the chunks:
+	local world = GetCurrentWorld()
+	for x = minX, maxX do
+		for z = minZ, maxZ do
+			world:RegenerateChunk(x, z)
+		end
+	end
+
+	return true, "Chunk regeneration queued"
 end
 
 
